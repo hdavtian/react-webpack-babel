@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Movies from './components/Movies';
+import Movies from './components/movies';
+import MovieAdder from './components/movie-adder';
 
 // Styles -----------------------------------
 // bootstrap
@@ -38,7 +39,33 @@ class App extends React.Component {
 
     // set state with movies: movies
     this.state = {movies};
+
+    // setting `this` for methods
+    this.remove = this.remove.bind(this);
   };
+
+  remove(movie) {
+
+    const movies = this.state.movies;
+
+    console.log('--------------------')
+    console.log(`Movies: `);
+    console.log(movies);
+    console.log(`Removing ... ${movie}`);
+
+    for(var i=0, l=movies.length; i<l; i++){
+      if (movies[i].name === movie) {
+        movies.splice(i, 1);
+
+        this.setState({
+          movies
+        });
+
+        return;
+      }
+    }
+
+  }
 
   render(){
     //console.log(this.state.movies);
@@ -54,14 +81,14 @@ class App extends React.Component {
 
               <h1>Movie Watchlist App</h1>
               <h4>AngularJS, Webpack, Bootstrap, Sass, Babel</h4>
-              <p>This is a my variation of the popular "todo app" written using AngularJs, Webpack, Bootstrap, Sass and Babel. Instead of adding to a list of todo\'s, you are adding movies to a watch list.</p>
+              <p>This is a my variation of the popular "todo app" written using React, Webpack, Bootstrap, Sass and Babel. Instead of adding to a list of todo\'s, you are adding movies to a watch list.</p>
               <p><a href="#">Tutorial</a> | <a href="#">Github</a> | By: <a href="#">Harma Davtian</a></p>
             </div>
 
             <div className="col-sm-6 right-col">
               <div className="content">
-                <movie-adder></movie-adder>
-                <Movies list={this.state.movies}></Movies>
+                <MovieAdder></MovieAdder>
+                <Movies list={this.state.movies} remove={this.remove}></Movies>
               </div>
             </div>
 
