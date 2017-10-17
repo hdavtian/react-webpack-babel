@@ -10243,39 +10243,72 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(2);
 
 var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Movie = function Movie(props) {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// We need state, so need to convert to a class
+
+var Movie = function (_React$Component) {
+  _inherits(Movie, _React$Component);
+
   //console.log(props.name)
 
-  var handleClick = function handleClick() {
-    props.remove(props.name);
-  };
+  function Movie(props) {
+    _classCallCheck(this, Movie);
 
-  return _react2.default.createElement(
-    "div",
-    { className: "row movie" },
-    _react2.default.createElement(
-      "div",
-      { className: "col-xs-8" },
-      _react2.default.createElement(
-        "span",
-        { className: "movie-name" },
-        props.name
-      )
-    ),
-    _react2.default.createElement(
-      "div",
-      { className: "col-xs-4" },
-      _react2.default.createElement("span", { className: "close-btn glyphicon glyphicon-remove", onClick: handleClick }),
-      _react2.default.createElement("span", { className: "close-btn glyphicon glyphicon-eye-close" })
-    )
-  );
-};
+    //binding `this` to methods
+    var _this = _possibleConstructorReturn(this, (Movie.__proto__ || Object.getPrototypeOf(Movie)).call(this, props));
+
+    _this.handleClick = _this.handleClick.bind(_this);
+    return _this;
+  }
+
+  _createClass(Movie, [{
+    key: 'handleClick',
+    value: function handleClick() {
+      alert('handleClick called');
+      //this.props.remove(this.props.name);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'row movie' },
+        _react2.default.createElement(
+          'div',
+          { className: 'col-xs-8' },
+          _react2.default.createElement(
+            'span',
+            { className: 'movie-name' },
+            this.props.name
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'col-xs-4' },
+          _react2.default.createElement('span', { className: 'close-btn glyphicon glyphicon-remove', onClick: this.handleClick }),
+          _react2.default.createElement('span', { className: 'close-btn glyphicon glyphicon-eye-close' })
+        )
+      );
+    }
+  }]);
+
+  return Movie;
+}(_react2.default.Component);
+
+;
 
 exports.default = Movie;
 
@@ -10306,43 +10339,49 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 // const MovieAdder = (props) => {
 
-var MovieAdder = function (_React$component) {
-  _inherits(MovieAdder, _React$component);
+var MovieAdder = function (_React$Component) {
+  _inherits(MovieAdder, _React$Component);
 
   function MovieAdder(props) {
     _classCallCheck(this, MovieAdder);
 
     var _this = _possibleConstructorReturn(this, (MovieAdder.__proto__ || Object.getPrototypeOf(MovieAdder)).call(this, props));
 
-    _this.state = { term: 'harma' };
+    _this.state = { term: null };
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    _this.handleChange = _this.handleChange.bind(_this);
     return _this;
   }
 
   _createClass(MovieAdder, [{
-    key: 'handleSubmit',
-    value: function handleSubmit(e) {
-      e.preventDefault();
-      props.onClickHandler('The Name of the Rose');
-      //alert('wtf');
+    key: "handleChange",
+    value: function handleChange(e) {
+      this.setState({ term: e.target.value });
     }
   }, {
-    key: 'render',
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      this.props.onClickHandler(this.state.term);
+    }
+  }, {
+    key: "render",
     value: function render() {
       return _react2.default.createElement(
-        'div',
-        { className: 'movie-adder-container' },
+        "div",
+        { className: "movie-adder-container" },
         _react2.default.createElement(
-          'form',
-          { onSubmit: handleSubmit },
-          _react2.default.createElement('input', { type: 'text', className: 'textbox-movie', placeholder: 'Type a movie name' }),
-          _react2.default.createElement('input', { type: 'submit', className: 'btn btn-primary', value: 'Add movie' })
+          "form",
+          { onSubmit: this.handleSubmit },
+          _react2.default.createElement("input", { type: "text", className: "textbox-movie", placeholder: "Type a movie name", onChange: this.handleChange }),
+          _react2.default.createElement("input", { type: "submit", className: "btn btn-primary", value: "Add movie" })
         )
       );
     }
   }]);
 
   return MovieAdder;
-}(_react2.default.component);
+}(_react2.default.Component);
 
 exports.default = MovieAdder;
 
