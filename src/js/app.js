@@ -93,11 +93,11 @@ class App extends React.Component {
               <div className="divider">
                 <div className="glyphicon glyphicon-film"></div>
               </div>
-
               <h1>Movie Watchlist App</h1>
               <h4>AngularJS, Webpack, Bootstrap, Sass, Babel</h4>
               <p>This is a my variation of the popular "todo app" written using React, Webpack, Bootstrap, Sass and Babel. Instead of adding to a list of todo\'s, you are adding movies to a watch list.</p>
               <p><a href="#">Tutorial</a> | <a href="#">Github</a> | By: <a href="#">Harma Davtian</a></p>
+              <img src="logo.png" width="100" />
             </div>
 
             <div className="col-sm-6 right-col">
