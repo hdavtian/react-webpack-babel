@@ -8,11 +8,6 @@ const MovieAdder = () => {
           <input type="submit" className="btn btn-primary" value="Add movie" />
         </form>
 
-        <div className="load-json">
-          <span className='glyphicon glyphicon-import'></span>
-          <span>Re-load movie list</span>
-        </div>
-
       </div>
   )
 };

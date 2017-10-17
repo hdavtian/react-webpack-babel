@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Movies from './components/movies';
 import MovieAdder from './components/movie-adder';
+import ReloadButton from './components/reload-button';
 
 // Styles -----------------------------------
 // bootstrap
@@ -19,7 +20,18 @@ class App extends React.Component {
   constructor(props){
     super(props);
 
-    const movies = [
+    const movies = this.getMovies();
+
+    // set state with movies: movies
+    this.state = {movies};
+
+    // setting `this` for methods
+    this.remove = this.remove.bind(this);
+    this.loadMovies = this.loadMovies.bind(this);
+  };
+
+  getMovies(){
+    return [
       {
         "name": "Gone With The Wind"
       },
@@ -36,13 +48,13 @@ class App extends React.Component {
         "name": "Goldfinger"
       }
     ];
+  }
 
-    // set state with movies: movies
-    this.state = {movies};
-
-    // setting `this` for methods
-    this.remove = this.remove.bind(this);
-  };
+  loadMovies(){
+    this.setState({
+      movies: this.getMovies()
+    })
+  }
 
   remove(movie) {
 
@@ -89,6 +101,7 @@ class App extends React.Component {
               <div className="content">
                 <MovieAdder></MovieAdder>
                 <Movies list={this.state.movies} remove={this.remove}></Movies>
+                <ReloadButton onClickHandler={this.loadMovies} />
               </div>
             </div>
 
