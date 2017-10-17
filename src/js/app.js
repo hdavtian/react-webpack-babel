@@ -25,9 +25,11 @@ class App extends React.Component {
     // set state with movies: movies
     this.state = {movies};
 
-    // setting `this` for methods
+    // bind `this` context on methods to avoid future confusion and hard to resolve
+    // `this` related bugs
     this.remove = this.remove.bind(this);
     this.loadMovies = this.loadMovies.bind(this);
+    this.adder = this.adder.bind(this);
   };
 
   getMovies(){
@@ -56,14 +58,15 @@ class App extends React.Component {
     })
   }
 
+  adder(movie){
+    let movies = this.state.movies;
+    movies.push({name: movie});
+    this.setState({movies});
+  }
+
   remove(movie) {
 
     const movies = this.state.movies;
-
-    console.log('--------------------')
-    console.log(`Movies: `);
-    console.log(movies);
-    console.log(`Removing ... ${movie}`);
 
     for(var i=0, l=movies.length; i<l; i++){
       if (movies[i].name === movie) {
@@ -99,7 +102,7 @@ class App extends React.Component {
 
             <div className="col-sm-6 right-col">
               <div className="content">
-                <MovieAdder></MovieAdder>
+                <MovieAdder onClickHandler={this.adder}></MovieAdder>
                 <Movies list={this.state.movies} remove={this.remove}></Movies>
                 <ReloadButton onClickHandler={this.loadMovies} />
               </div>
