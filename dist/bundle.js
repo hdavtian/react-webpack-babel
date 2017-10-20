@@ -1591,7 +1591,8 @@ var App = function (_React$Component) {
                   { href: '#' },
                   'Harma Davtian'
                 )
-              )
+              ),
+              _react2.default.createElement('img', { src: 'logo.png', width: '100' })
             ),
             _react2.default.createElement(
               'div',
@@ -10267,25 +10268,33 @@ var Movie = function (_React$Component) {
   function Movie(props) {
     _classCallCheck(this, Movie);
 
-    //binding `this` to methods
     var _this = _possibleConstructorReturn(this, (Movie.__proto__ || Object.getPrototypeOf(Movie)).call(this, props));
 
-    _this.handleClick = _this.handleClick.bind(_this);
+    _this.state = { hasSeen: false
+
+      //binding `this` to methods
+    };_this.handleClick = _this.handleClick.bind(_this);
+    _this.handleSeen = _this.handleSeen.bind(_this);
     return _this;
   }
 
   _createClass(Movie, [{
     key: 'handleClick',
     value: function handleClick() {
-      alert('handleClick called');
-      //this.props.remove(this.props.name);
+      this.props.remove(this.props.name);
+    }
+  }, {
+    key: 'handleSeen',
+    value: function handleSeen() {
+      // toggle true/false on each click
+      this.setState({ hasSeen: !this.state.hasSeen });
     }
   }, {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
         'div',
-        { className: 'row movie' },
+        { className: this.state.hasSeen ? 'row movie crossed-out' : 'row movie' },
         _react2.default.createElement(
           'div',
           { className: 'col-xs-8' },
@@ -10299,7 +10308,7 @@ var Movie = function (_React$Component) {
           'div',
           { className: 'col-xs-4' },
           _react2.default.createElement('span', { className: 'close-btn glyphicon glyphicon-remove', onClick: this.handleClick }),
-          _react2.default.createElement('span', { className: 'close-btn glyphicon glyphicon-eye-close' })
+          _react2.default.createElement('span', { className: 'close-btn glyphicon glyphicon-eye-close', onClick: this.handleSeen })
         )
       );
     }
@@ -10347,34 +10356,48 @@ var MovieAdder = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (MovieAdder.__proto__ || Object.getPrototypeOf(MovieAdder)).call(this, props));
 
-    _this.state = { term: null };
+    _this.state = { term: "" };
     _this.handleSubmit = _this.handleSubmit.bind(_this);
     _this.handleChange = _this.handleChange.bind(_this);
     return _this;
   }
 
   _createClass(MovieAdder, [{
-    key: "handleChange",
+    key: 'handleChange',
     value: function handleChange(e) {
       this.setState({ term: e.target.value });
     }
   }, {
-    key: "handleSubmit",
+    key: 'handleSubmit',
     value: function handleSubmit(e) {
       e.preventDefault();
+
+      if (this.state.term == '') {
+        alert('Please enter a movie name to add to list');
+        return;
+      };
+
       this.props.onClickHandler(this.state.term);
     }
   }, {
-    key: "render",
+    key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        "div",
-        { className: "movie-adder-container" },
+        'div',
+        { className: 'movie-adder-container' },
         _react2.default.createElement(
-          "form",
+          'form',
           { onSubmit: this.handleSubmit },
-          _react2.default.createElement("input", { type: "text", className: "textbox-movie", placeholder: "Type a movie name", onChange: this.handleChange }),
-          _react2.default.createElement("input", { type: "submit", className: "btn btn-primary", value: "Add movie" })
+          _react2.default.createElement('input', {
+            type: 'text',
+            className: 'textbox-movie',
+            placeholder: 'Type a movie name',
+            onChange: this.handleChange,
+            value: this.state.term }),
+          _react2.default.createElement('input', {
+            type: 'submit',
+            className: 'btn btn-primary',
+            value: 'Add movie' })
         )
       );
     }
